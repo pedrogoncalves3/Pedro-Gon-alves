@@ -20,7 +20,10 @@ match operacao:
     case '*':
         print(f"resultado: {numero1 * numero2}")   
     case '/':
-        print(f"resultado: {numero1 / numero2}")   
+        print(f"resultado: {numero1 / numero2}")
+    case _ :
+       resultado = 0
+       print("opão invalida")
 
 
 print()    
