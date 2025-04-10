@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-size: cover; /* cover the entire page */
+            background-repeat: no-repeat; /* no repeat */
+            background-attachment: fixed; /* fixed background */
+            color: black; /* black text */
+            display: flex;
+            flex-direction: column; /* align items vertically */
+            align-items: center; /* center items horizontally */
+            height: 100vh;
+            margin: 0;
+        }
+        .top-menu {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            display: flex;
+            justify-content: center; /* center items horizontally */
+            padding: 10px 0;
+        }
+        .top-menu a {
+            color: black; /* black text */
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .top-menu a::after {
+            content: "↘";
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+        .top-menu a.price, .top-menu a.help {
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+            position: relative;
+        }
+        .top-menu a.price::after, .top-menu a.help::after {
+            content: "";
+        }
+        .top-menu a:hover {
+            text-decoration: underline;
+        }
+        .side-menu {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            background-color: #000000; /* black background */
+            transition: width 0.3s;
+            overflow-x: hidden;
+            white-space: nowrap;
+        }
+        .side-menu.open, .side-menu:hover {
+            width: 200px;
+        }
+        .side-menu a {
+            padding: 16px 8px;
+            text-decoration: none;
+            font-size: 18px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s, opacity 0.3s;
+            opacity: 0; /* Hidden by default */
+            display: flex;
+            align-items: center;
+        }
+        .side-menu.open a, .side-menu:hover a {
+            opacity: 1; /* Show when menu is open or hovered */
+        }
+        .side-menu a:hover {
+            background-color: #45a049;
+        }
+        .container, .menu {
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            color: black; /* black text */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+            margin-top: 20px;
+            animation: slideIn 0.5s ease-in-out, fadeIn 1s ease-in-out; /* apply the animations */
+        }
+        .container h2, .menu h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        .container label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+        .container input[type="text"],
+        .container input[type="email"],
+        .container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .container button, .menu button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .container button:hover, .menu button:hover {
+            background-color: #45a049;
+        }
+        .container .options {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .container .options a {
+            color: #000000; /* black text */
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .container .options a:hover {
+            text-decoration: underline;
+        }
+        .menu {
+            background-color: rgba(245, 245, 220, 0.8); /* semi-transparent beige color */
+            display: none;
+        }
+        .menu p {
+            margin: 10px 0;
+        }
+        .menu button {
+            background-color: #4CAF50;
+        }
+        #support-contact {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            border-radius: 8px;
+            color: black;
+            font-weight: bold;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            text-align: center;
+            font-size: 24px; /* larger text */
+        }
+        #developer-chat {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            border-radius: 8px;
+            color: black;
+            font-weight: bold;
+            font-size: 24px; /* larger text */
+        }
+        #support-options {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* semi-transparent white background */
+            border-radius: 8px;
+            color: black;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            text-align: center;
+            font-size: 24px; /* larger text */
+        }
+        #support-options a {
+            display: block;
+            margin-bottom: 10px;
+            color: #000000; /* black text */
+            text-decoration: none;
+        }
+        #support-options a:hover {
+            text-decoration: underline;
+        }
+        .menu-icon {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .menu-icon div {
+            width: 7px;
+            height: 7px;
+            background-color: black;
+            border-radius: 50%;
+        }
+        .menu-icon span {
+            font-size: 12px;
+            color: black;
+            margin-top: 5px;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1; /* ensures the main content takes available space */
+        }
+        .content-wrapper {
+            margin-top: 80px; /* move content further down */
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-menu">
+        <a href="#">Produto</a>
+        <a href="#">Soluções</a>
+        <a href="#" class="price">Preço</a>
+        <a href="#" class="help">Ajuda</a>
+    </div>
+
+    <div class="menu-icon" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+        <span>Menu</span>
+    </div>
+
+    <div class="side-menu" id="side-menu">
+        <a href="#">Produto</a>
+        <a href="#">Soluções</a>
+        <a href="#">Preço</a>
+        <a href="#">Ajuda</a>
+        <a href="#" onclick="showLogin()">Login</a>
+        <a href="#" onclick="showForgotPassword()">Redefinir Senha</a>
+        <a href="#" onclick="showRegister()">Criar Conta</a>
+        <a href="#" onclick="showContact()">Falar com o Desenvolvedor</a>
+        <a href="#" onclick="showSupport()">Falar com o Suporte</a>
+    </div>
+
+    <div class="main-content">
+        <div class="content-wrapper">
+            <div class="container" id="login-container">
+                <h2>Login</h2>
+                <form id="login-form" onsubmit="login(event)">
+                    <label for="login-username">Usuário:</label>
+                    <input type="text" id="login-username" required>
+                    
+                    <label for="login-password">Senha:</label>
+                    <input type="password" id="login-password" required>
+                    
+                    <button type="submit">Entrar</button>
+                </form>
+                <div class="options">
+                    <a href="#" onclick="showRegister()">Criar Conta</a>
+                    <a href="#" onclick="showForgotPassword()">Esqueceu a senha?</a>
+                </div>
+            </div>
+
+            <div class="container" id="register-container" style="display: none;">
+                <h2>Cadastre-se com uma das contas</h2>
+                <form id="register-form" onsubmit="register(event)">
+                    <label for="full-name">Digite seu Nome Completo:</label>
+                    <input type="text" id="full-name" required>
+                    
+                    <label for="register-email">Email:</label>
+                    <input type="email" id="register-email" required>
+                    
+                    <label for="register-password">Senha:</label>
+                    <input type="password" id="register-password" required>
+                    
+                    <button type="submit">Registrar</button>
+                </form>
+                <div class="options">
+                    <a href="#" onclick="showLogin()">Já tem uma conta? Entre</a>
+                </div>
+            </div>
+
+            <div class="container" id="forgot-password-container" style="display: none;">
+                <h2>Esqueceu a Senha</h2>
+                <form id="forgot-password-form" onsubmit="resetPassword(event)">
+                    <label for="confirm-email">Confirme seu Email:</label>
+                    <input type="email" id="confirm-email" required>
+
+                    <label for="new-password">Nova Senha:</label>
+                    <input type="password" id="new-password" required>
+                    
+                    <button type="submit">Redefinir Senha</button>
+                </form>
+                <div class="options">
+                    <a href="#" onclick="showLogin()">Lembrei minha senha? Entre</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="menu" id="menu-container">
+        <h2>Menu</h2>
+        <p>Bem-vindo ao nosso aplicativo!</p>
+        <p>Aqui você encontra várias funcionalidades e serviços para facilitar sua vida.</p>
+        <button onclick="logout()">Sair</button>
+    </div>
+
+    <div id="support-contact">
+        <p>Número para contato:</p>
+        <p>(+55) 71997089325</p>
+    </div>
+
+    <div id="developer-chat">
+        <p>Iniciando chat com o desenvolvedor... Por favor, aguarde o suporte.</p>
+    </div>
+
+    <div id="support-options">
+        <a href="#support-contact" onclick="showContactNumber()">Número de contato</a>
+        <a href="#" onclick="startSupportChat()">Chat</a>
+        <a href="https://laughing-space-meme-v6r96q7w9xj5fp79v.github.dev/" target="_blank">Site</a>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const sideMenu = document.getElementById('side-menu');
+            sideMenu.classList.toggle('open');
+        }
+
+        function showRegister() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('register-container').style.display = 'block';
+            document.getElementById('forgot-password-container').style.display = 'none';
+            document.getElementById('support-contact').style.display = 'none';
+            document.getElementById('developer-chat').style.display = 'none';
+            document.getElementById('support-options').style.display = 'none';
+        }
+
+        function showLogin() {
+            document.getElementById('register-container').style.display = 'none';
+            document.getElementById('login-container').style.display = 'block';
+            document.getElementById('forgot-password-container').style.display = 'none';
+            document.getElementById('support-contact').style.display = 'none';
+            document.getElementById('developer-chat').style.display = 'none';
+            document.getElementById('support-options').style.display = 'none';
+        }
+
+        function showForgotPassword() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('register-container').style.display = 'none';
+            document.getElementById('forgot-password-container').style.display = 'block';
+            document.getElementById('support-contact').style.display = 'none';
+            document.getElementById('developer-chat').style.display = 'none';
+            document.getElementById('support-options').style.display = 'none';
+        }
+
+        function showContact() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('register-container').style.display = 'none';
+            document.getElementById('forgot-password-container').style.display = 'none';
+            document.getElementById('support-contact').style.display = 'none';
+            document.getElementById('developer-chat').style.display = 'block';
+            document.getElementById('support-options').style.display = 'none';
+        }
+
+        function showSupport() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('register-container').style.display = 'none';
+            document.getElementById('forgot-password-container').style.display = 'none';
+            document.getElementById('developer-chat').style.display = 'none';
+            document.getElementById('support-contact').style.display = 'none';
+            document.getElementById('support-options').style.display = 'block';
+        }
+
+        function showContactNumber() {
+            document.getElementById('support-contact').style.display = 'block';
+            document.getElementById('support-options').style.display = 'none';
+        }
+
+        function startSupportChat() {
+            alert('Iniciando chat com o suporte...');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            
+            const storedEmail = localStorage.getItem('email');
+            const storedPassword = localStorage.getItem('password');
+            
+            if (username === storedEmail && password === storedPassword) {
+                document.getElementById('login-container').style.display = 'none';
+                document.getElementById('menu-container').style.display = 'block';
+                document.getElementById('support-contact').style.display = 'none';
+                document.getElementById('developer-chat').style.display = 'none';
+                document.getElementById('support-options').style.display = 'none';
+            } else {
+                alert('Usuário ou senha incorretos!');
+            }
+        }
+
+        function register(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('full-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            
+            localStorage.setItem('fullName', fullName);
+            localStorage.setItem('email', email);
+            localStorage.setItem('password', password);
+            
+            alert('Conta criada com sucesso!');
+            showLogin();
+        }
+
+        function resetPassword(event) {
+            event.preventDefault();
+            const confirmEmail = document.getElementById('confirm-email').value;
+            const newPassword = document.getElementById('new-password').value;
+            const storedEmail = localStorage.getItem('email');
+
+            if (confirmEmail === storedEmail) {
+                localStorage.setItem('password', newPassword);
+                alert('Senha redefinida com sucesso!');
+                showLogin();
+            } else {
+                alert('Email não corresponde ao registrado!');
+            }
+        }
+
+        function logout() {
+            document.getElementById('menu-container').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
