@@ -34,26 +34,37 @@ while True:
         prato.append("lasanha:")
         preco.append  (20.00) 
     case '3':
-        prato.append(f"strogonoff:")   
+        prato.append("strogonoff:")   
         preco.append  (18.00)
     case '4':
-        prato.append(f"bife acebolado: ")
+        prato.append("bife acebolado: ")
         preco.append  (15.00)
     case '5' :
         prato.append("pão com ovo:")
         preco.append   (5.00)
     case '0' :
        os.system("clear")
+       print(f"Quantidade de pratos: {len(prato)}")
        print(f"seu prato foi: {prato}")
        print(f"preço: {preco}")
        
        
+       
+       
+       
+       
+       
        break
         
-def calcular(preco):
-  soma = sum(preco)   
+def calcular(precos):
+  soma = sum(precos)  
+  return soma
     
-    
+preco_total = calcular(preco) 
+
+print(f"preço total: {preco_total}")
+
+   
     
        
    

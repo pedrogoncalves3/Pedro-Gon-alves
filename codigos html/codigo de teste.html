@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login com Menu e Tema</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Menu superior */
+        .top-menu {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+
+        .top-menu a {
+            color: black;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+
+        .top-menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* Menu lateral */
+        .side-menu {
+            width: 60px;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .side-menu button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .side-menu button:hover {
+            color: #aaa;
+        }
+
+        /* Tema Escuro */
+        .dark-theme {
+            background-color: #121212;
+            color: white;
+        }
+
+        .dark-theme .side-menu {
+            background-color: #222;
+        }
+
+        .dark-theme .side-menu button {
+            color: white;
+        }
+
+        .dark-theme .side-menu button:hover {
+            color: #bbb;
+        }
+
+        /* Botão de alternar tema */
+        #theme-toggle-button {
+            position: fixed;
+            top: 10px;
+            left: 70px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        #theme-toggle-button:hover {
+            background-color: #ddd;
+        }
+
+        .dark-theme #theme-toggle-button {
+            background-color: rgba(50, 50, 50, 0.9);
+            color: white;
+        }
+
+        /* Conteúdo principal */
+        .content {
+            margin-left: 60px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .container button:hover {
+            background-color: #45a049;
+        }
+
+        .container .options a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #000;
+            text-decoration: none;
+        }
+
+        .container .options a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu superior -->
+    <div class="top-menu">
+        <a href="#">Produto</a>
+        <a href="#">Soluções</a>
+        <a href="#">Preço</a>
+        <a href="#">Ajuda</a>
+    </div>
+
+    <!-- Menu lateral -->
+    <div class="side-menu">
+        <button onclick="alert('Home')">🏠</button>
+        <button onclick="alert('Perfil')">👤</button>
+        <button onclick="alert('Configurações')">⚙️</button>
+    </div>
+
+    <!-- Botão de alternar tema -->
+    <button id="theme-toggle-button" onclick="toggleTheme()">🌗 Tema</button>
+
+    <!-- Conteúdo principal -->
+    <div class="content">
+        <h1>Bem-vindo!</h1>
+        <div class="container" id="login-container">
+            <h2>Login</h2>
+            <form id="login-form" onsubmit="login(event)">
+                <input type="text" id="username" placeholder="Usuário" required>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <div class="options">
+                <a href="#" onclick="showRegister()">Criar Conta</a>
+                <a href="#" onclick="showForgotPassword()">Esqueceu a senha?</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            alert('Login realizado!');
+        }
+
+        function showRegister() {
+            alert('Redirecionando para cadastro...');
+        }
+
+        function showForgotPassword() {
+            alert('Redefinição de senha em progresso...');
+        }
+    </script>
+</body>
+</html>
