@@ -60,7 +60,9 @@ def calcular_folha_pagamento():
     total_descontos = (desconto_inss + desconto_irrf + desconto_vale_transporte + desconto_vale_refeicao + desconto_plano_saude)
     salario_liquido = salario_base - total_descontos
 
-    # Exibir resultados
+    
+    
+    
     print("\nResumo da Folha de Pagamento:")
     print(f"Salário Base: R$ {salario_base:.2f}")
     print(f"Desconto INSS: R$ {desconto_inss:.2f}")
@@ -69,5 +71,8 @@ def calcular_folha_pagamento():
     print(f"Desconto Vale Refeição: R$ {desconto_vale_refeicao:.2f}")
     print(f"Desconto Plano de Saúde: R$ {desconto_plano_saude:.2f}")
     print(f"Salário Líquido: R$ {salario_liquido:.2f}")
-    
+
+ValueError
+print("codigo invalido digite o codigo novamente!")
+
 calcular_folha_pagamento()
