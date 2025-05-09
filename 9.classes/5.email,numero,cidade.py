@@ -1,3 +1,4 @@
+
 import os
 from time import sleep
 from dataclasses import dataclass
@@ -5,35 +6,28 @@ from dataclasses import dataclass
 os.system("clear")
 
 @dataclass
-class Autor:
+class Cliente:
     nome: str
-    biografia: str
+    email: str
+    telefone: str
     
-@dataclass
-class livro:
-    titulo: str
-    ano: int 
-    autor: Autor        
+lista_clientes = []    
     
-
- 
+    
 print("_____pedindo informções!_____")
-print()
 
-
-autor = Autor(
-    nome_livro = str(input("digite o titulo do livro: ")),
-    autor_livro = str(input("digite o autor do livro: ")),
-    ano_livro = int(input("digite o ano em que foi lançado: "))
+cliente = Cliente(
+    nome = input("digite o nome: "),
+    email = input("informe seu E-mail: "),
+    telefone = input("informe o telefone: ")
 )
-autor.exibir_detahes()
-
-def exibir_Deltlhes(self):
-    print("_____exibindo reultado do livro!_____")
-    print(f"titulo do livro: {self.autor.nome}")    
-    print(f"autor do livro: {self.autor.autor_livro}")   
-    print(f"ano de lançamento: {self.autor.ano_livro}")  
+lista_clientes.append(cliente)
 print()
-    
-    
-    
+
+for cliente in lista_clientes:
+    print("_____exibindo reultado do livro!_____")
+    print(f"titulo do livro: {cliente.nome}")    
+    print(f"autor do livro: {cliente.email}")   
+    print(f"ano de lançamento: {cliente.telefone}")  
+print()
+
