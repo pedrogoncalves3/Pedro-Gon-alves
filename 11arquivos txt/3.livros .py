@@ -6,6 +6,7 @@ os.system("clear")
 
 lista_Livros = []
 
+
 @dataclass
 class Livro:
     livro: str
@@ -33,7 +34,7 @@ nome_arquivo = "dados do livro.txt"
 print("SALVANDO DADOS NO ARQUIVO!.")
 with open (nome_arquivo, "a") as arquivos_livros:
     for livros in lista_livros:
-        arquivos_livros.write(f"{livros.livro}\n{livros.autor}\n{livros.categoria}\n{livros.preco}\n\n")
+        arquivos_livros.write(f"nome do livro: {livros.livro}\nautor do livro: {livros.autor}\ncategoria: {livros.categoria}\npreço: {livros.preco}\n\n")
         
     
 print("\nACESSANDO DADOS NO ARQUIVO\nAGUARDE!.")
