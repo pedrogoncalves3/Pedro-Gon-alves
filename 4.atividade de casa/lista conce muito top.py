@@ -28,7 +28,7 @@ OBS:VERIFIFICAR AS CORES EM ESTOQUE
 nome = input("digite o nome que deseja receber na nota: ")    
     
 while True: 
-    menu_carro()    
+    menu_carro() 
     opcao1 = str(input("digite o codigo do carro: "))    
     
     
@@ -83,6 +83,7 @@ preco_total = calcular(preco)
 print(f"\nResumo da Compra para {nome}:")
 print(f"Quantidade de carros escolhidos: {len(carro)}")
 print(f"Carros: {', '.join(carro)}")
+print(f"Categoria dos carros: {categoria}")
 print(f"Preço total: R$ {preco_total:,.2f}")
 
 
@@ -94,7 +95,7 @@ nome_arquivo = "3.0 pedidos da concerssionaria"
 #  escrita/salvar/acumular
 
 with open (nome_arquivo,"a") as arquivo:
-      arquivo.write(f"Resumo da Compra de {nome}\ncarros escolhido: {carro}categoria do carro: {categoria}\npreço total: {preco_total:,.2f}\nquantidade de carros: {len(carro)}\n\n\n")
+      arquivo.write(f"Resumo da Compra de {nome}\ncarros escolhido: {carro}\ncategoria do carro: {categoria}\npreço total: {preco_total:,.2f}\nquantidade de carros: {len(carro)}\n\n\n")
       print()
         
 print("Dados salvo com sucesso!\ntenha um bom dia!")       

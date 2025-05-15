@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de login com tema de mecânica, menu superior, menu lateral e alternância de tema entre claro e escuro.">
+    <title>Login - Oficina Mecânica</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            background-color: #e0e0e0;
+            color: #444;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Menu superior */
+        .top-menu {
+            width: 100%;
+            background-color: #ffff00; /* Amarelo cor de sol */
+            display: flex;
+            justify-content: center;
+            padding: 8px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .top-menu a {
+            color: black; /* Sempre preto */
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 8px 15px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .top-menu a:hover {
+            background-color: #e6e600;
+            text-decoration: none;
+        }
+
+        /* Menu lateral */
+        .side-menu {
+            width: 70px;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            transition: width 0.3s;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .side-menu.expanded {
+            width: 220px;
+        }
+
+        .side-menu button {
+            background: none;
+            border: none;
+            color: #f0f0f0;
+            font-size: 18px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: color 0.3s, padding-left 0.3s;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding-left: 15px;
+            text-align: left;
+        }
+
+        .side-menu button span {
+            margin-left: 12px;
+            display: none;
+        }
+
+        .side-menu.expanded button span {
+            display: inline-block;
+        }
+
+        .side-menu button:hover {
+            color: #ffff00; /* Amarelo cor de sol no hover */
+            padding-left: 20px;
+        }
+
+        /* Botão superior direito para abrir menu */
+        .menu-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            text-align: center;
+            cursor: pointer;
+            font-size: 18px;
+            color: #555;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 6px 10px;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .menu-toggle:hover {
+            color: #ffff00; /* Amarelo cor de sol no hover */
+            background-color: #eee;
+            border-color: #ffff00;
+        }
+
+        .menu-toggle div {
+            font-size: 12px;
+        }
+
+        /* Tema Escuro */
+        .dark-theme {
+            background-color: #1a1a1a;
+            color: #d4d4d4;
+        }
+
+        .dark-theme .top-menu {
+            background-color: #ffd700; /* Amarelo dourado no tema escuro */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-theme .top-menu a {
+            color: black; /* Sempre preto */
+            font-weight: bold;
+        }
+
+        .dark-theme .top-menu a:hover {
+            background-color: #ccad00;
+        }
+
+        .dark-theme .side-menu {
+            background-color: #222;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-theme .side-menu button {
+            color: #eee;
+        }
+
+        .dark-theme .side-menu button:hover {
+            color: #ffff00; /* Amarelo dourado no hover */
+        }
+
+        .dark-theme .menu-toggle {
+            color: #eee;
+            background-color: #333;
+            border-color: #555;
+        }
+
+        .dark-theme .menu-toggle:hover {
+            color: #ffff00; /* Amarelo dourado no hover */
+            background-color: #444;
+            border-color: #ffff00;
+        }
+
+        /* Botão de alternar tema */
+        #theme-toggle-button {
+            position: fixed;
+            top: 10px;
+            left: 80px;
+            z-index: 1000;
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        #theme-toggle-button:hover {
+            background-color: #ddd;
+            border-color: #bbb;
+        }
+
+        .dark-theme #theme-toggle-button {
+            background-color: #333;
+            color: #eee;
+            border-color: #555;
+        }
+
+        .dark-theme #theme-toggle-button:hover {
+            background-color: #444;
+            border-color: #ffff00;
+        }
+
+        /* Conteúdo principal */
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-left: 70px;
+            padding: 30px;
+            transition: margin-left 0.3s;
+            flex-grow: 1;
+        }
+
+        .side-menu.expanded ~ .content {
+            margin-left: 220px;
+        }
+
+        .container {
+            max-width: 380px;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s, color 0.3s;
+            border: 1px solid #ddd;
+            text-align: center;
+            /* Explicitly setting width and box-sizing */
+            width: 380px; /* Same max-width */
+            box-sizing: border-box; /* Include padding and border in the width */
+        }
+
+        .dark-theme .container {
+            background-color: #222;
+            color: #f0f0f0;
+            border-color: #444;
+            /* Ensuring consistent box-sizing */
+            box-sizing: border-box;
+        }
+
+        .container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .dark-theme .container h2 {
+            color: #eee;
+        }
+
+        .container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #555;
+            text-align: left;
+        }
+
+        .dark-theme .container label {
+            color: #ccc;
+        }
+
+        .container input {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box; /* Ensure consistent box-sizing */
+        }
+
+        .dark-theme .container input {
+            background-color: #333;
+            color: #eee;
+            border-color: #555;
+            box-sizing: border-box; /* Ensure consistent box-sizing */
+        }
+
+        .container button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #ffff00; /* Amarelo cor de sol */
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-bottom: 15px;
+            box-sizing: border-box; /* Ensure consistent box-sizing */
+        }
+
+        .container button[type="submit"]:hover {
+            background-color: #e6e600;
+        }
+
+        .dark-theme .container button[type="submit"] {
+            background-color: #ffd700; /* Amarelo dourado no tema escuro */
+            color: black;
+        }
+
+        .dark-theme .container button[type="submit"]:hover {
+            background-color: #ccad00;
+        }
+
+        .container .options {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .container .options a {
+            font-size: 16px;
+            color: black; /* Sempre preto no tema claro */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .container .options a:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .dark-theme .container .options {
+            align-items: flex-start; /* Alinhar à esquerda no tema escuro */
+        }
+
+        .dark-theme .container .options a {
+            color: #ff8c00; /* Laranja no tema escuro */
+            display: block; /* Para ficarem um embaixo do outro */
+            margin-bottom: 5px; /* Espaço entre os links */
+        }
+
+        .dark-theme .container .options a:hover {
+            color: #ffa500; /* Laranja mais claro no hover */
+        }
+    </style>
+</head>
+<body>
+    <nav class="top-menu" aria-label="Menu superior">
+        <a href="#" aria-label="Serviços">Serviços</a>
+        <a href="#" aria-label="Peças">Peças</a>
+        <a href="#" aria-label="Agendamentos">Agendamentos</a>
+        <a href="#" aria-label="Contato">Contato</a>
+    </nav>
+
+    <button id="theme-toggle-button" onclick="toggleTheme()" aria-label="Alternar tema">🌗 Tema</button>
+
+    <div class="menu-toggle" onclick="toggleMenu()">
+        ☰
+        <div>Menu</div>
+    </div>
+
+    <aside class="side-menu" id="side-menu" aria-label="Menu lateral" onmouseover="expandMenu()" onmouseout="collapseMenu()">
+        <button onclick="alert('Página Inicial')" aria-label="Ir para Página Inicial">🔧<span>Página Inicial</span></button>
+        <button onclick="alert('Perfil do Mecânico')" aria-label="Ir para Perfil do Mecânico">👨‍🔧<span>Perfil</span></button>
+        <button onclick="alert('Configurações')" aria-label="Ir para Configurações">⚙️<span>Configurações</span></button>
+    </aside>
+
+    <main class="content">
+        <div class="container" id="login-container">
+            <h2>Login</h2>
+            <form id="login-form" onsubmit="login(event)" aria-label="Formulário de login">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" placeholder="Usuário" required>
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+            <div class="options">
+                <a href="#" aria-label="Criar conta" style="font-size: 1.1em;">Criar Conta</a>
+                <a href="#" aria-label="Esqueceu a senha" style="font-size: 1.1em;">Esqueceu a Senha?</a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const sideMenu = document.getElementById('side-menu');
+        const optionsContainer = document.querySelector('.container .options');
+        const criarContaLink = optionsContainer.querySelector('a:first-child');
+        const esqueceuSenhaLink = optionsContainer.querySelector('a:last-child');
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+            updateAuthLinksStyle();
+        }
+
+        function updateAuthLinksStyle() {
+            if (document.body.classList.contains('dark-theme')) {
+                optionsContainer.style.alignItems = 'flex-start'; // Alinhar à esquerda
+                criarContaLink.style.color = '#ff8c00'; // Laranja
+                criarContaLink.style.display = 'block'; // Um embaixo do outro
+                criarContaLink.style.marginBottom = '5px';
+                esqueceuSenhaLink.style.color = '#ff8c00'; // Laranja
+                esqueceuSenhaLink.style.display = 'block'; // Um embaixo do outro
+                esqueceuSenhaLink.style.marginBottom = '0';
+            } else {
+                optionsContainer.style.alignItems = 'center'; // Centralizar no tema claro
+                criarContaLink.style.color = 'black'; // Preto no tema claro
+                criarContaLink.style.display = 'inline'; // Lado a lado no tema claro
+                criarContaLink.style.marginBottom = '0';
+                esqueceuSenhaLink.style.color = 'black'; // Preto no tema claro
+                esqueceuSenhaLink.style.display = 'inline'; // Lado a lado no tema claro
+                esqueceuSenhaLink.style.marginBottom = '0';
+            }
+        }
+
+        function login(event) {
+            event.preventDefault();
+            alert('Login realizado com sucesso!');
+        }
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('expanded');
+        }
+
+        function expandMenu() {
+            sideMenu.classList.add('expanded');
+        }
+
+        function collapseMenu() {
+            sideMenu.classList.remove('expanded');
+        }
+
+        // Atualizar os estilos dos links de autenticação no carregamento da página
+        updateAuthLinksStyle();
+    </script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página de login com tema de mecânica, menu superior, menu lateral e alternância de tema entre claro e escuro.">
+    <title>Login - Oficina Mecânica</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Menu superior */
+        .top-menu {
+            width: 100%;
+            background-color: #ffcc00; /* Cor que remete a oficinas */
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-menu a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 4px;
+        }
+
+        .top-menu a:hover {
+            text-decoration: underline;
+        }
+
+        /* Menu lateral */
+        .side-menu {
+            width: 60px;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            padding: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            transition: width 0.3s;
+        }
+
+        .side-menu.expanded {
+            width: 200px; /* Largura do menu expandido */
+        }
+
+        .side-menu button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding-left: 10px;
+            text-align: left;
+        }
+
+        .side-menu button span {
+            margin-left: 10px;
+            display: none;
+        }
+
+        .side-menu.expanded button span {
+            display: inline-block; /* Mostra os rótulos ao expandir o menu */
+        }
+
+        .side-menu button:hover {
+            color: #ffcc00;
+        }
+
+        /* Botão superior direito para abrir menu */
+        .menu-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            color: black;
+        }
+
+        .menu-toggle:hover {
+            color: #ffcc00;
+        }
+
+        /* Tema Escuro */
+        .dark-theme {
+            background-color: #121212;
+            color: white;
+        }
+
+        .dark-theme .side-menu {
+            background-color: #222;
+        }
+
+        .dark-theme .side-menu button {
+            color: white;
+        }
+
+        .dark-theme .side-menu button:hover {
+            color: #ffcc00;
+        }
+
+        .dark-theme .menu-toggle {
+            color: white;
+        }
+
+        .dark-theme .menu-toggle:hover {
+            color: #ffcc00;
+        }
+
+        /* Botão de alternar tema */
+        #theme-toggle-button {
+            position: fixed;
+            top: 10px;
+            left: 70px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: black;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        #theme-toggle-button:hover {
+            background-color: #ddd;
+        }
+
+        .dark-theme #theme-toggle-button {
+            background-color: rgba(50, 50, 50, 0.9);
+            color: white;
+        }
+
+        /* Conteúdo principal */
+        .content {
+            margin-left: 60px;
+            padding: 20px;
+            text-align: center;
+            transition: margin-left 0.3s;
+        }
+
+        .side-menu.expanded ~ .content {
+            margin-left: 200px; /* Ajusta o conteúdo ao expandir o menu */
+        }
+
+        .container {
+            max-width: 300px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-theme .container {
+            background-color: black; /* Fundo preto no tema escuro */
+            color: #ffcc00; /* Texto amarelo no tema escuro */
+        }
+
+        .container label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffcc00;
+            color: black;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .container button:hover {
+            background-color: #e6b800;
+        }
+    </style>
+</head>
+<body>
+    <!-- Menu superior -->
+    <nav class="top-menu" aria-label="Menu superior">
+        <a href="#" aria-label="Serviços">Serviços</a>
+        <a href="#" aria-label="Peças">Peças</a>
+        <a href="#" aria-label="Agendamentos">Agendamentos</a>
+        <a href="#" aria-label="Contato">Contato</a>
+    </nav>
+
+    <!-- Botão de alternar tema -->
+    <button id="theme-toggle-button" onclick="toggleTheme()" aria-label="Alternar tema">🌗 Tema</button>
+
+    <!-- Botão para abrir menu -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+        ☰
+        <div>Menu</div>
+    </div>
+
+    <!-- Menu lateral -->
+    <aside class="side-menu" id="side-menu" aria-label="Menu lateral" onmouseover="expandMenu()" onmouseout="collapseMenu()">
+        <button onclick="alert('Página Inicial')" aria-label="Ir para Página Inicial">🔧<span>Página Inicial</span></button>
+        <button onclick="alert('Perfil do Mecânico')" aria-label="Ir para Perfil do Mecânico">👨‍🔧<span>Perfil</span></button>
+        <button onclick="alert('Configurações')" aria-label="Ir para Configurações">⚙️<span>Configurações</span></button>
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="content">
+        <h1>Bem-vindo à Oficina!</h1>
+        <div class="container" id="login-container">
+            <h2>Login</h2>
+            <form id="login-form" onsubmit="login(event)" aria-label="Formulário de login">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" placeholder="Usuário" required>
+                <label for="password">Senha</label>
+                <input type="password" id="password" placeholder="Senha" required>
+                <button type="submit">Entrar</button>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        const sideMenu = document.getElementById('side-menu');
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        function login(event) {
+            event.preventDefault();
+            alert('Login realizado com sucesso!');
+        }
+
+        function toggleMenu() {
+            sideMenu.classList.toggle('expanded');
+        }
+
+        function expandMenu() {
+            sideMenu.classList.add('expanded');
+        }
+
+        function collapseMenu() {
+            sideMenu.classList.remove('expanded');
+        }
+    </script>
+</body>
+</html>
