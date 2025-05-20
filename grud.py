@@ -39,7 +39,7 @@ def atualizar(lista_nomes):
         lista_nomes[indice] = novo_nome
         print(f"{nome_antigo} foi atualizado para {novo_nome}")
     else:
-        print(f"\n O nome {nome_antigo} não doi encontrado. ")
+        print(f"\n O nome {nome_antigo} não foi encontrado. ")
             
 # função para excluir nomes
 def excluir(lista_nomes):

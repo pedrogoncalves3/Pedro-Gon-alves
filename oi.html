@@ -223,16 +223,14 @@
             transition: background-color 0.3s, color 0.3s;
             border: 1px solid #ddd;
             text-align: center;
-            /* Explicitly setting width and box-sizing */
-            width: 380px; /* Same max-width */
-            box-sizing: border-box; /* Include padding and border in the width */
+            width: 380px;
+            box-sizing: border-box;
         }
 
         .dark-theme .container {
             background-color: #222;
             color: #f0f0f0;
             border-color: #444;
-            /* Ensuring consistent box-sizing */
             box-sizing: border-box;
         }
 
@@ -264,14 +262,14 @@
             border: 1px solid #bbb;
             border-radius: 6px;
             font-size: 16px;
-            box-sizing: border-box; /* Ensure consistent box-sizing */
+            box-sizing: border-box;
         }
 
         .dark-theme .container input {
             background-color: #333;
             color: #eee;
             border-color: #555;
-            box-sizing: border-box; /* Ensure consistent box-sizing */
+            box-sizing: border-box;
         }
 
         .container button[type="submit"] {
@@ -285,7 +283,7 @@
             font-size: 18px;
             transition: background-color 0.3s;
             margin-bottom: 15px;
-            box-sizing: border-box; /* Ensure consistent box-sizing */
+            box-sizing: border-box;
         }
 
         .container button[type="submit"]:hover {
@@ -334,6 +332,130 @@
         .dark-theme .container .options a:hover {
             color: #ffa500; /* Laranja mais claro no hover */
         }
+
+        /* Overlay e painéis de formulário */
+        .form-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .form-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .form-panel {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+        }
+
+        .dark-theme .form-panel {
+            background-color: #2a2a2a;
+            color: #d4d4d4;
+        }
+
+        .form-panel h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .dark-theme .form-panel h2 {
+            color: #eee;
+        }
+
+        .form-panel label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            text-align: left;
+        }
+
+        .dark-theme .form-panel label {
+            color: #ccc;
+        }
+
+        .form-panel input {
+            width: calc(100% - 22px);
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .dark-theme .form-panel input {
+            background-color: #333;
+            color: #eee;
+            border-color: #555;
+        }
+
+        .form-panel button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #ffff00;
+            color: #333;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .form-panel button[type="submit"]:hover {
+            background-color: #e6e600;
+        }
+
+        .dark-theme .form-panel button[type="submit"] {
+            background-color: #ffd700;
+            color: black;
+        }
+
+        .dark-theme .form-panel button[type="submit"]:hover {
+            background-color: #ccad00;
+        }
+
+        .form-panel .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #777;
+            transition: color 0.3s;
+        }
+
+        .form-panel .close-btn:hover {
+            color: #333;
+        }
+
+        .dark-theme .form-panel .close-btn {
+            color: #aaa;
+        }
+
+        .dark-theme .form-panel .close-btn:hover {
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -368,17 +490,49 @@
                 <button type="submit">Entrar</button>
             </form>
             <div class="options">
-                <a href="#" aria-label="Criar conta" style="font-size: 1.1em;">Criar Conta</a>
-                <a href="#" aria-label="Esqueceu a senha" style="font-size: 1.1em;">Esqueceu a Senha?</a>
+                <a href="#" aria-label="Criar conta" style="font-size: 1.1em;" onclick="openRegisterPanel(event)">Criar Conta</a>
+                <a href="#" aria-label="Esqueceu a senha" style="font-size: 1.1em;" onclick="openForgotPanel(event)">Esqueceu a Senha?</a>
             </div>
         </div>
     </main>
+
+    <div class="form-overlay" id="register-overlay">
+        <div class="form-panel">
+            <span class="close-btn" onclick="closeRegisterPanel()">&times;</span>
+            <h2>Criar Conta</h2>
+            <form onsubmit="registerUser(event)">
+                <label for="reg-username">Nome de Usuário</label>
+                <input type="text" id="reg-username" placeholder="Nome de Usuário" required>
+                <label for="reg-email">E-mail</label>
+                <input type="email" id="reg-email" placeholder="Seu E-mail" required>
+                <label for="reg-password">Senha</label>
+                <input type="password" id="reg-password" placeholder="Crie uma Senha" required>
+                <label for="reg-confirm-password">Confirmar Senha</label>
+                <input type="password" id="reg-confirm-password" placeholder="Confirme a Senha" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="form-overlay" id="forgot-overlay">
+        <div class="form-panel">
+            <span class="close-btn" onclick="closeForgotPanel()">&times;</span>
+            <h2>Recuperar Senha</h2>
+            <form onsubmit="recoverPassword(event)">
+                <label for="forgot-email">E-mail</label>
+                <input type="email" id="forgot-email" placeholder="Seu E-mail de Cadastro" required>
+                <button type="submit">Enviar Link de Recuperação</button>
+            </form>
+        </div>
+    </div>
 
     <script>
         const sideMenu = document.getElementById('side-menu');
         const optionsContainer = document.querySelector('.container .options');
         const criarContaLink = optionsContainer.querySelector('a:first-child');
         const esqueceuSenhaLink = optionsContainer.querySelector('a:last-child');
+        const registerOverlay = document.getElementById('register-overlay');
+        const forgotOverlay = document.getElementById('forgot-overlay');
 
         function toggleTheme() {
             document.body.classList.toggle('dark-theme');
@@ -387,20 +541,20 @@
 
         function updateAuthLinksStyle() {
             if (document.body.classList.contains('dark-theme')) {
-                optionsContainer.style.alignItems = 'flex-start'; // Alinhar à esquerda
-                criarContaLink.style.color = '#ff8c00'; // Laranja
-                criarContaLink.style.display = 'block'; // Um embaixo do outro
+                optionsContainer.style.alignItems = 'flex-start';
+                criarContaLink.style.color = '#ff8c00';
+                criarContaLink.style.display = 'block';
                 criarContaLink.style.marginBottom = '5px';
-                esqueceuSenhaLink.style.color = '#ff8c00'; // Laranja
-                esqueceuSenhaLink.style.display = 'block'; // Um embaixo do outro
+                esqueceuSenhaLink.style.color = '#ff8c00';
+                esqueceuSenhaLink.style.display = 'block';
                 esqueceuSenhaLink.style.marginBottom = '0';
             } else {
-                optionsContainer.style.alignItems = 'center'; // Centralizar no tema claro
-                criarContaLink.style.color = 'black'; // Preto no tema claro
-                criarContaLink.style.display = 'inline'; // Lado a lado no tema claro
+                optionsContainer.style.alignItems = 'center';
+                criarContaLink.style.color = 'black';
+                criarContaLink.style.display = 'inline';
                 criarContaLink.style.marginBottom = '0';
-                esqueceuSenhaLink.style.color = 'black'; // Preto no tema claro
-                esqueceuSenhaLink.style.display = 'inline'; // Lado a lado no tema claro
+                esqueceuSenhaLink.style.color = 'black';
+                esqueceuSenhaLink.style.display = 'inline';
                 esqueceuSenhaLink.style.marginBottom = '0';
             }
         }
@@ -420,6 +574,50 @@
 
         function collapseMenu() {
             sideMenu.classList.remove('expanded');
+        }
+
+        // Functions for "Criar Conta" panel
+        function openRegisterPanel(event) {
+            event.preventDefault(); // Prevent default link behavior
+            registerOverlay.classList.add('active');
+        }
+
+        function closeRegisterPanel() {
+            registerOverlay.classList.remove('active');
+        }
+
+        function registerUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('reg-username').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem!');
+                return;
+            }
+            alert(`Usuário ${username} cadastrado com sucesso com o e-mail: ${email}!`);
+            closeRegisterPanel();
+            // Here you would typically send data to a backend server
+        }
+
+        // Functions for "Esqueceu a Senha?" panel
+        function openForgotPanel(event) {
+            event.preventDefault(); // Prevent default link behavior
+            forgotOverlay.classList.add('active');
+        }
+
+        function closeForgotPanel() {
+            forgotOverlay.classList.remove('active');
+        }
+
+        function recoverPassword(event) {
+            event.preventDefault();
+            const email = document.getElementById('forgot-email').value;
+            alert(`Link de recuperação de senha enviado para: ${email}. Verifique seu e-mail.`);
+            closeForgotPanel();
+            // Here you would typically send a request to a backend server to handle password recovery
         }
 
         // Atualizar os estilos dos links de autenticação no carregamento da página
